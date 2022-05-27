@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Rye&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}" />
+    <title>Descubra seu nome Shakespeareano</title>
+  </head>
+  <body>
+    <h1 class="title">Descubra seu nome Shakespeareano</h1>
+    <section class="outter-container">
+      <img class="image" src="{{url_for('static', filename='Shakespeare_paraguaio_circular.png')}}" />
+      <div class="inner-container">
+        <div class="input-container" id="input-container">
+          <label for="name">Digite seu nome:</label>
+          <input type="text" id="name" name="name" />
+          
+          <button class="button" id="generate-name-btn" onclick="generateName()">
+            Gerar meu nome
+          </button>
+        </div>
+
+        <div class="output-container" id="output-container">
+            <div id="speech-bubble">
+              Seu nome Shakespeareano é
+              <span id="generate-name-output"></span>
+            </div>
+            <button class="button" onclick="tryAgain()">Tentar novamente</button>
+        </div>
+
+      </div>
+    </section>
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+  </body>
+</html>
