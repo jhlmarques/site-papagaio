@@ -1,7 +1,12 @@
 import json
 import flask, os
 from flask import request, jsonify
-from shakespeare import generate_name, generate_text
+from shakespeare import generate_name, generate_text, vocab
+from unidecode import unidecode
+
+MODE_NAME = 0
+MODE_TEXT = 1
+ERROR_INVALID_INPUT = 1
 
 app = flask.Flask(__name__)
 
@@ -13,27 +18,29 @@ def index():
 def generateName():
     args = request.args
     # Get the generation mode (text or name)
-    mode = args.get('mode')
+    mode = int(args.get('mode'))
     generation_func = None # Callback
 
-    if mode == 'name':
+    r_dict = {'error': 0, 'generated': '*ERROR*'}
+
+    # Check if it's a valid generation mode
+    if mode == MODE_NAME:
         generation_func = generate_name
-    elif mode == 'text':
-        generation_func = generate_text
     else:
-        return jsonify({'generated': 'fodase'}) # placeholder
+        generation_func = generate_text
 
+    input_text = unidecode(args.get('text').upper())
+    input_vocab = set(input_text)
+    
+    if not input_vocab.issubset(vocab):
+        r_dict['error'] = ERROR_INVALID_INPUT
+    else:
+        generated = ""
+        while True:
+            generated = generation_func(input_text)
+            if generated != "":
+                break
 
-    raw_input = args.get('name')
+        r_dict['generated'] = generated[:-1]
 
-    if not raw_input.isalpha() or not raw_input.isascii():
-        return jsonify({'generated': 'Por favor não use números ou letra estranha'})
-
-    generated = ""
-    while True:
-        generated = generation_func(f'{raw_input.upper()}')
-        if generated != "":
-            break
-
-
-    return jsonify({'generated': generated[:-1]})
+    return jsonify(r_dict)

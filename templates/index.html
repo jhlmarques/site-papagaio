@@ -12,25 +12,29 @@
     />
     <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}" />
-    <title>Descubra seu nome Shakespeareano</title>
+    <title>Gerador Shakespeariano</title>
   </head>
   <body>
-    <h1 class="title">Descubra seu nome Shakespeareano</h1>
+    <h1 class="title">Gerador Shakespeariano</h1>
     <section class="outter-container">
       <img class="image" src="{{url_for('static', filename='Shakespeare_paraguaio_circular.png')}}" />
       <div class="inner-container">
         <div class="input-container" id="input-container">
-          <label for="name">Digite seu nome:</label>
+          <label for="mode">Selecione o modo de geração:</label>
+          <select class="selected" id="mode">
+            <option value="0">Nome</option>
+            <option value="1">Texto</option>
+          </select>
+          <label for="name">Digite alguma coisa:</label>
           <input type="text" id="name" name="name" />
           
           <button class="button" id="generate-name-btn" onclick="generateName()">
-            Gerar meu nome
+            Gerar
           </button>
         </div>
 
         <div class="output-container" id="output-container">
             <div id="speech-bubble">
-              Seu nome Shakespeareano é
               <span id="generate-name-output"></span>
             </div>
             <button class="button" onclick="tryAgain()">Tentar novamente</button>
